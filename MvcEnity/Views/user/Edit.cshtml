@@ -1,0 +1,189 @@
+﻿@model MvcEnity.Models.userform
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>@ViewBag.Message</h2>
+
+<div class="container-fluid">
+<form action="@Url.Action("Edit", "user")" method="post" id="myForm">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label>First Name</label>
+      @Html.TextBoxFor(x => x.firstname, new { @class = "form-control" })
+      @Html.ValidationMessageFor(x => x.firstname)
+      @Html.HiddenFor(x => x.id)
+    </div>
+    <div class="form-group col-md-6">
+      <label>Last Name</label>
+        @Html.TextBoxFor(x => x.lastname, new { @class = "form-control" })
+      @Html.ValidationMessageFor(x => x.lastname)
+    </div>
+  </div> 
+  <div class="form-group col-md-6">
+    <label>Email</label>
+       @Html.TextBoxFor(x => x.email, new { @class = "form-control" })
+      @Html.ValidationMessageFor(x => x.email)
+  </div>
+  <div class="form-group col-md-6">
+    <label>Address </label>
+     @Html.TextBoxFor(x => x.address, new { @class = "form-control" })
+      @Html.ValidationMessageFor(x => x.address)
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label>Country</label>
+        @Html.DropDownListFor(x => x.countryid, Model.countries, new { @class = "form-control" })
+      @Html.ValidationMessageFor(x => x.countryid)
+    </div>
+    <div class="form-group col-md-4">
+      <label>State</label>
+         @Html.DropDownListFor(x => x.stateid, Model.states, new { @class = "form-control" })
+      @Html.ValidationMessageFor(x => x.stateid)
+    </div>
+    <div class="form-group col-md-4">
+      <label>City</label>
+         @Html.DropDownListFor(x => x.cityid, Model.cities, new { @class = "form-control" })
+      @Html.ValidationMessageFor(x => x.cityid)
+    </div>
+  </div>
+  <div class="form-group">
+  <label>Number</label>
+     @Html.TextBoxFor(x => x.number, new { @class = "form-control" })
+      @Html.ValidationMessageFor(x => x.number)
+  </div>
+   <div class="modal-footer">
+     <button type="submit" class="btn btn-primary">Update</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+
+</form>
+@*<label style="color:red;"> @ViewBag.Message</label>*@
+</div>
+  
+
+  
+<script type="text/javascript">
+    $(document).ready(function () {
+        var ddlcountries = $('#countryid');
+        var ddlstates = $('#stateid');
+        var ddlCities = $('#cityid');
+
+        ddlcountries.change(function () {
+            //alert(ddlcountries.val());
+            $.ajax({
+                url: '/user/GetstateBycountryId',
+                method: 'get',
+                data: { countryid: $(this).val() },
+                dataType: 'json',
+                success: function (data) {
+                    ddlstates.empty();
+                    ddlstates.append($('<option/>', { value: "", text: 'Select States' }));
+                    $(data).each(function (index, item) {
+                        ddlstates.append($('<option/>', { value: item.Value, text: item.Text }));
+                    });
+                }
+            });
+        });
+
+
+        $('#myForm').submit(function(e) {
+          debugger;
+           let first = document.forms["myForm"]["firstname"].value;
+           let last=document.forms["myForm"]["lastname"].value;
+           let email=document.forms["myForm"]["email"].value;
+           let address=document.forms["myForm"]["address"].value;
+           let countryid=document.forms["myForm"]["countryid"].value;
+           let stateid=document.forms["myForm"]["stateid"].value;
+           let cityid=document.forms["myForm"]["cityid"].value;
+           let number=document.forms["myForm"]["number"].value;
+            $(".error").remove();
+          if (first == "") {
+//            $("#firsterror").html("Enter First Name");
+//            return false;
+            $('#firstname').after('<span class="error">Enter a First Name</span>');
+            }
+             if(last == ""){
+              $('#lastname').after('<span class="error">Enter a Last Name</span>');
+             //alert("Please Enter Last Name");
+             
+            }
+             if(email == ""){
+               $('#email').after('<span class="error">Enter a Email</span>');
+             //alert("Please Enter Email");
+             
+            }
+            else
+            {
+                 var regEx =/^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+                var validEmail = regEx.test(email);
+                if (!validEmail) {
+                $('#email').after('<span class="error">Enter a valid email</span>');
+            }
+            }
+            
+             if(address == ""){
+              $('#address').after('<span class="error">Enter a Address</span>');
+             //alert("Please Enter Adderss");
+            
+            }
+             if(countryid == ""){
+             $('#countryid').after('<span class="error">Enter a Country</span>');
+            
+            }
+             if(stateid == ""){
+              $('#stateid').after('<span class="error">Enter a State</span>');
+            }
+              if(cityid == ""){
+           $('#cityid').after('<span class="error">Enter a City</span>');
+             
+            }
+              if(number == ""){
+              $('#number').after('<span class="error">Enter a Number</span>');
+             //alert("Please Enter Number");
+            }
+            else 
+            {
+                    var num=number.length;
+                    if (num != 10) 
+                    {
+                        $('#number').after('<span class="error">Number must be 10 Number</span>');
+                    }
+            }
+          
+            if(first != "" && last != "" && email != "" && address != "" && number != "" && num == 10)
+            {
+                return true;
+            }
+            else{
+            return false;}
+          
+          })
+
+
+
+
+        ddlstates.change(function () {
+            //alert(ddlcountries.val());
+            $.ajax({
+                url: '/user/GetcityByStateId',
+                method: 'get',
+                data: { stateid: $(this).val() },
+                dataType: 'json',
+                success: function (data) {
+                    ddlCities.empty();
+                    ddlCities.append($('<option/>', { value: "", text: 'Select States' }));
+                    $(data).each(function (index, item) {
+                        ddlCities.append($('<option/>', { value: item.Value, text: item.Text }));
+                    });
+                }
+            });
+        });
+
+
+
+
+    });
+
+
+</script>

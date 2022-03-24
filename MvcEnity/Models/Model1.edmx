@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="usercascadModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="usercascadModelStoreContainer">
+          <EntitySet Name="city2" EntityType="usercascadModel.Store.city2" store:Type="Tables" Schema="usercascad" />
+          <EntitySet Name="country" EntityType="usercascadModel.Store.country" store:Type="Tables" Schema="usercascad" />
+          <EntitySet Name="empstate" EntityType="usercascadModel.Store.empstate" store:Type="Tables" Schema="usercascad" />
+          <EntitySet Name="states1" EntityType="usercascadModel.Store.states1" store:Type="Tables" Schema="usercascad" />
+          <AssociationSet Name="city2_ibfk_1" Association="usercascadModel.Store.city2_ibfk_1">
+            <End Role="states1" EntitySet="states1" />
+            <End Role="city2" EntitySet="city2" />
+          </AssociationSet>
+          <AssociationSet Name="empstate_ibfk_1" Association="usercascadModel.Store.empstate_ibfk_1">
+            <End Role="states1" EntitySet="states1" />
+            <End Role="empstate" EntitySet="empstate" />
+          </AssociationSet>
+          <AssociationSet Name="empstate_ibfk_3" Association="usercascadModel.Store.empstate_ibfk_3">
+            <End Role="country" EntitySet="country" />
+            <End Role="empstate" EntitySet="empstate" />
+          </AssociationSet>
+          <AssociationSet Name="states1_ibfk_1" Association="usercascadModel.Store.states1_ibfk_1">
+            <End Role="country" EntitySet="country" />
+            <End Role="states1" EntitySet="states1" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="city2">
+          <Key>
+            <PropertyRef Name="cityid" />
+          </Key>
+          <Property Name="cityid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="cityname" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="stateid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="country">
+          <Key>
+            <PropertyRef Name="countryid" />
+          </Key>
+          <Property Name="countryid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="countryname" Type="varchar" Nullable="false" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="empstate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="lastname" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="email" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="address" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="countryid" Type="int" Nullable="false" />
+          <Property Name="stateid" Type="int" Nullable="false" />
+          <Property Name="cityid" Type="int" Nullable="false" />
+          <Property Name="number" Type="varchar" Nullable="false" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="states1">
+          <Key>
+            <PropertyRef Name="stateid" />
+          </Key>
+          <Property Name="stateid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="statename" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="countryid" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="city2_ibfk_1">
+          <End Role="states1" Type="usercascadModel.Store.states1" Multiplicity="1" />
+          <End Role="city2" Type="usercascadModel.Store.city2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="states1">
+              <PropertyRef Name="stateid" />
+            </Principal>
+            <Dependent Role="city2">
+              <PropertyRef Name="stateid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="empstate_ibfk_1">
+          <End Role="states1" Type="usercascadModel.Store.states1" Multiplicity="1" />
+          <End Role="empstate" Type="usercascadModel.Store.empstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="states1">
+              <PropertyRef Name="stateid" />
+            </Principal>
+            <Dependent Role="empstate">
+              <PropertyRef Name="stateid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="empstate_ibfk_3">
+          <End Role="country" Type="usercascadModel.Store.country" Multiplicity="1" />
+          <End Role="empstate" Type="usercascadModel.Store.empstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="countryid" />
+            </Principal>
+            <Dependent Role="empstate">
+              <PropertyRef Name="countryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="states1_ibfk_1">
+          <End Role="country" Type="usercascadModel.Store.country" Multiplicity="1" />
+          <End Role="states1" Type="usercascadModel.Store.states1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="countryid" />
+            </Principal>
+            <Dependent Role="states1">
+              <PropertyRef Name="countryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="usercascadModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="usercascadEntities4" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="city2" EntityType="usercascadModel.city2" />
+          <EntitySet Name="countries" EntityType="usercascadModel.country" />
+          <EntitySet Name="empstates" EntityType="usercascadModel.empstate" />
+          <EntitySet Name="states1" EntityType="usercascadModel.states1" />
+          <AssociationSet Name="city2_ibfk_1" Association="usercascadModel.city2_ibfk_1">
+            <End Role="states1" EntitySet="states1" />
+            <End Role="city2" EntitySet="city2" />
+          </AssociationSet>
+          <AssociationSet Name="empstate_ibfk_3" Association="usercascadModel.empstate_ibfk_3">
+            <End Role="country" EntitySet="countries" />
+            <End Role="empstate" EntitySet="empstates" />
+          </AssociationSet>
+          <AssociationSet Name="states1_ibfk_1" Association="usercascadModel.states1_ibfk_1">
+            <End Role="country" EntitySet="countries" />
+            <End Role="states1" EntitySet="states1" />
+          </AssociationSet>
+          <AssociationSet Name="empstate_ibfk_1" Association="usercascadModel.empstate_ibfk_1">
+            <End Role="states1" EntitySet="states1" />
+            <End Role="empstate" EntitySet="empstates" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="city2">
+          <Key>
+            <PropertyRef Name="cityid" />
+          </Key>
+          <Property Name="cityid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cityname" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="stateid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="states1" Relationship="usercascadModel.city2_ibfk_1" FromRole="city2" ToRole="states1" />
+        </EntityType>
+        <EntityType Name="country">
+          <Key>
+            <PropertyRef Name="countryid" />
+          </Key>
+          <Property Name="countryid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="countryname" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="empstates" Relationship="usercascadModel.empstate_ibfk_3" FromRole="country" ToRole="empstate" />
+          <NavigationProperty Name="states1" Relationship="usercascadModel.states1_ibfk_1" FromRole="country" ToRole="states1" />
+        </EntityType>
+        <EntityType Name="empstate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="lastname" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="countryid" Type="Int32" Nullable="false" />
+          <Property Name="stateid" Type="Int32" Nullable="false" />
+          <Property Name="cityid" Type="Int32" Nullable="false" />
+          <Property Name="number" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="country" Relationship="usercascadModel.empstate_ibfk_3" FromRole="empstate" ToRole="country" />
+          <NavigationProperty Name="states1" Relationship="usercascadModel.empstate_ibfk_1" FromRole="empstate" ToRole="states1" />
+        </EntityType>
+        <EntityType Name="states1">
+          <Key>
+            <PropertyRef Name="stateid" />
+          </Key>
+          <Property Name="stateid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="statename" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="countryid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="city2" Relationship="usercascadModel.city2_ibfk_1" FromRole="states1" ToRole="city2" />
+          <NavigationProperty Name="country" Relationship="usercascadModel.states1_ibfk_1" FromRole="states1" ToRole="country" />
+          <NavigationProperty Name="empstates" Relationship="usercascadModel.empstate_ibfk_1" FromRole="states1" ToRole="empstate" />
+        </EntityType>
+        <Association Name="city2_ibfk_1">
+          <End Role="states1" Type="usercascadModel.states1" Multiplicity="1" />
+          <End Role="city2" Type="usercascadModel.city2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="states1">
+              <PropertyRef Name="stateid" />
+            </Principal>
+            <Dependent Role="city2">
+              <PropertyRef Name="stateid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="empstate_ibfk_3">
+          <End Role="country" Type="usercascadModel.country" Multiplicity="1" />
+          <End Role="empstate" Type="usercascadModel.empstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="countryid" />
+            </Principal>
+            <Dependent Role="empstate">
+              <PropertyRef Name="countryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="states1_ibfk_1">
+          <End Role="country" Type="usercascadModel.country" Multiplicity="1" />
+          <End Role="states1" Type="usercascadModel.states1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="countryid" />
+            </Principal>
+            <Dependent Role="states1">
+              <PropertyRef Name="countryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="empstate_ibfk_1">
+          <End Role="states1" Type="usercascadModel.states1" Multiplicity="1" />
+          <End Role="empstate" Type="usercascadModel.empstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="states1">
+              <PropertyRef Name="stateid" />
+            </Principal>
+            <Dependent Role="empstate">
+              <PropertyRef Name="stateid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="usercascadModelStoreContainer" CdmEntityContainer="usercascadEntities4">
+          <EntitySetMapping Name="city2">
+            <EntityTypeMapping TypeName="usercascadModel.city2">
+              <MappingFragment StoreEntitySet="city2">
+                <ScalarProperty Name="cityid" ColumnName="cityid" />
+                <ScalarProperty Name="cityname" ColumnName="cityname" />
+                <ScalarProperty Name="stateid" ColumnName="stateid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="countries">
+            <EntityTypeMapping TypeName="usercascadModel.country">
+              <MappingFragment StoreEntitySet="country">
+                <ScalarProperty Name="countryid" ColumnName="countryid" />
+                <ScalarProperty Name="countryname" ColumnName="countryname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="empstates">
+            <EntityTypeMapping TypeName="usercascadModel.empstate">
+              <MappingFragment StoreEntitySet="empstate">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="countryid" ColumnName="countryid" />
+                <ScalarProperty Name="stateid" ColumnName="stateid" />
+                <ScalarProperty Name="cityid" ColumnName="cityid" />
+                <ScalarProperty Name="number" ColumnName="number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="states1">
+            <EntityTypeMapping TypeName="usercascadModel.states1">
+              <MappingFragment StoreEntitySet="states1">
+                <ScalarProperty Name="stateid" ColumnName="stateid" />
+                <ScalarProperty Name="statename" ColumnName="statename" />
+                <ScalarProperty Name="countryid" ColumnName="countryid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model1">
+        <EntityTypeShape EntityType="usercascadModel.city2" Width="1.5" PointX="5.25" PointY="7.125" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="usercascadModel.country" Width="1.5" PointX="0.75" PointY="3.25" Height="1.7879850260416657" IsExpanded="true" />
+        <EntityTypeShape EntityType="usercascadModel.empstate" Width="1.5" PointX="5.25" PointY="2.625" Height="3.1340950520833335" IsExpanded="true" />
+        <EntityTypeShape EntityType="usercascadModel.states1" Width="1.5" PointX="3" PointY="7" Height="2.1725878906249996" IsExpanded="true" />
+        <AssociationConnector Association="usercascadModel.city2_ibfk_1" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="8.0189925130208337" />
+          <ConnectorPoint PointX="5.25" PointY="8.0189925130208337" />
+        </AssociationConnector>
+        <AssociationConnector Association="usercascadModel.empstate_ibfk_3" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="4.1439925130208328" />
+          <ConnectorPoint PointX="5.25" PointY="4.1439925130208328" />
+        </AssociationConnector>
+        <AssociationConnector Association="usercascadModel.states1_ibfk_1" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.5" PointY="5.0379850260416656" />
+          <ConnectorPoint PointX="1.5" PointY="8.0862939453125" />
+          <ConnectorPoint PointX="3" PointY="8.0862939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="usercascadModel.empstate_ibfk_1" ManuallyRouted="false">
+          <ConnectorPoint PointX="3.75" PointY="7" />
+          <ConnectorPoint PointX="3.75" PointY="4.9827962825520835" />
+          <ConnectorPoint PointX="5.25" PointY="4.9827962825520835" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
